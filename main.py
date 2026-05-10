@@ -35,7 +35,8 @@ run = True
 finish = False
 font.init()
 my_font = font.SysFont("Arial", 35)
-win = my_font.render("Вы победили!", True, (255, 255, 0))
+winl = my_font.render("Победила левая рокетка", True, (255, 255, 0))
+winr = my_font.render("Победила правая рокетка!", True, (255, 255, 0))
 left_r = Player ("racket.png", 250, 20 , 3, (30, 150))
 right_r = Player ("racket.png", 250, 630 , 3, (30, 150))
 ball = GameSprite("tenis_ball.png", 250, 350, 10, (150, 150))
@@ -56,11 +57,17 @@ while run:
             speed_y *= -1
         if sprite.collide_rect(ball, left_r) or sprite.collide_rect(ball, right_r):
             speed_x *= -1
+
         left_r.reset()
         right_r.reset()
         left_r.update_l()
         right_r.update_r()
 
-        pass
+    if ball.rect.x < 0:
+        finish = True
+        window.blit(winr, (180, 200))
+    if ball.rect.x > 700:
+        finish = True
+        window.blit(winl, (180, 200))
     display.update() 
     clock.tick(60)
